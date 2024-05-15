@@ -64,15 +64,15 @@ const RegisterModal = () => {
                 required
             />
             <Input
-                passwordField={true}
-                showPassword={showPassword}
-                togglePassword={togglePassword}
                 id="password"
                 type="password"
                 label="Password"
                 disabled={isLoading}
                 register={register}
                 erros={errors}
+                passwordField={true}
+                showPassword={showPassword}
+                togglePassword={togglePassword}
                 required
             />
         </div>
