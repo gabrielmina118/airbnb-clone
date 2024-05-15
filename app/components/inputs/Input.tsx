@@ -1,17 +1,22 @@
 "use client";
 
+import { SetStateAction, useCallback, useState } from "react";
 import { FieldValues, UseFormRegister, FieldErrors } from "react-hook-form";
 import { BiDollar } from "react-icons/bi";
+import { LuEye, LuEyeOff } from "react-icons/lu";
 
 interface InputProps {
     id: string;
     label: string;
     type?: string;
     disabled?: boolean;
+    showPassword?: boolean;
     formatPrice?: boolean;
     required?: boolean;
     register: UseFormRegister<FieldValues>;
     erros: FieldErrors;
+    togglePassword?: () => void;
+    passwordField?: boolean;
 }
 
 const Input: React.FC<InputProps> = ({
@@ -19,6 +24,9 @@ const Input: React.FC<InputProps> = ({
     label,
     type = "text",
     disabled,
+    showPassword,
+    togglePassword,
+    passwordField,
     formatPrice,
     required,
     register,
@@ -37,7 +45,7 @@ const Input: React.FC<InputProps> = ({
                 disabled={disabled}
                 {...register(id, { required })}
                 placeholder=" "
-                type={type}
+                type={showPassword && type === "password" ? "password" : "text"}
                 className={`
                     peer
                     w-full
@@ -80,6 +88,21 @@ const Input: React.FC<InputProps> = ({
             >
                 {label}
             </label>
+            {passwordField && (
+                <div onClick={togglePassword} className="cursor-pointer">
+                    {showPassword ? (
+                        <LuEyeOff
+                            size={24}
+                            className="text-neutral-700 absolute top-5 right-2"
+                        />
+                    ) : (
+                        <LuEye
+                            size={24}
+                            className="text-neutral-700 absolute top-5 right-2"
+                        />
+                    )}
+                </div>
+            )}
         </div>
     );
 };

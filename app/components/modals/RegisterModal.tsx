@@ -14,6 +14,11 @@ import Button from "../Button";
 const RegisterModal = () => {
     const registerModal = useRegisterModal();
     const [isLoading, setIsLoading] = useState(false);
+    const [showPassword, setShowPassword] = useState(true);
+
+    const togglePassword = useCallback(() => {
+        setShowPassword((current) => !current);
+    }, []);
 
     const {
         register,
@@ -59,6 +64,9 @@ const RegisterModal = () => {
                 required
             />
             <Input
+                passwordField={true}
+                showPassword={showPassword}
+                togglePassword={togglePassword}
                 id="password"
                 type="password"
                 label="Password"
@@ -88,7 +96,10 @@ const RegisterModal = () => {
             <div className="text-neutral-500 text-center mt-4 font-light">
                 <div className="flex flex-row items-center gap-2 justify-center">
                     <div>Já tem uma conta?</div>
-                    <div onClick={registerModal.onClose} className="text-neutral-800 cursor-pointer hover:underline">
+                    <div
+                        onClick={registerModal.onClose}
+                        className="text-neutral-800 cursor-pointer hover:underline"
+                    >
                         Log in
                     </div>
                 </div>
