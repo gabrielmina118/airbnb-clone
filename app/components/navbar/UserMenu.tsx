@@ -22,11 +22,17 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
         setIsOpen((current) => !current);
     }, []);
 
+    const onRent = useCallback(()=>{
+        if(!currentUser){
+            return loginModal.onOpen();
+        }
+    },[currentUser, loginModal])
+
     return (
         <div className="relative">
             <div className="flex flex-row items-center gap-3">
                 <div
-                    onClick={() => {}}
+                    onClick={onRent}
                     className="hidden md:block text-sm font-semibold py-2 px-4 rounded-full hover:bg-neutral-300 transition cursor-pointer"
                 >
                     Airbnb sua casa

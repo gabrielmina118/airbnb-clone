@@ -15,8 +15,10 @@ import Modal from "./Modal";
 import Heading from "../Heading";
 import Input from "../inputs/Input";
 import Button from "../Button";
+import useLoginModal from "@/app/hooks/useLoginModal";
 
 const RegisterModal = () => {
+    const loginModal = useLoginModal();
     const registerModal = useRegisterModal();
     const [isLoading, setIsLoading] = useState(false);
     const [showPassword, setShowPassword] = useState(true);
@@ -83,6 +85,11 @@ const RegisterModal = () => {
         </div>
     );
 
+    const toggle = useCallback(() => {
+        loginModal.onOpen();
+        registerModal.onClose();
+    }, [loginModal, registerModal]);
+
     const footerContent = (
         <div className="flex flex-col gap-4 mt-3">
             <hr />
@@ -90,17 +97,13 @@ const RegisterModal = () => {
                 outline
                 label="Continue com google"
                 icon={FcGoogle}
-                onClick={() =>
-                    signIn("google")
-                }
+                onClick={() => signIn("google")}
             />
             <Button
                 outline
                 label="Continue com github"
                 icon={AiFillGithub}
-                onClick={() =>
-                    signIn("github")
-                }
+                onClick={() => signIn("github")}
             />
             {/* <Button
                 outline
@@ -114,7 +117,7 @@ const RegisterModal = () => {
                 <div className="flex flex-row items-center gap-2 justify-center">
                     <div>Já tem uma conta?</div>
                     <div
-                        onClick={registerModal.onClose}
+                        onClick={toggle}
                         className="text-neutral-800 cursor-pointer hover:underline"
                     >
                         Log in

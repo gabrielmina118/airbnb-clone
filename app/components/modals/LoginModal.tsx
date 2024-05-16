@@ -22,6 +22,7 @@ import { sign } from "crypto";
 const LoginModal = () => {
     const router = useRouter();
     const loginModal = useLoginModal();
+    const registerModal = useRegisterModal()
     const [isLoading, setIsLoading] = useState(false);
     const [showPassword, setShowPassword] = useState(true);
 
@@ -56,6 +57,11 @@ const LoginModal = () => {
             }
         });
     };
+
+    const toggle = useCallback(()=>{
+        loginModal.onClose();
+        registerModal.onOpen()
+    },[loginModal, registerModal])
 
     const bodyContent = (
         <div className="flex flex-col gap-4">
@@ -93,17 +99,13 @@ const LoginModal = () => {
                 outline
                 label="Google Login"
                 icon={FcGoogle}
-                onClick={() =>
-                    signIn("google")
-                }
+                onClick={() => signIn("google")}
             />
             <Button
                 outline
                 label="Github Login"
                 icon={AiFillGithub}
-                onClick={() =>
-                    signIn("github")
-                }
+                onClick={() => signIn("github")}
             />
             {/* <Button
                 outline
@@ -115,12 +117,12 @@ const LoginModal = () => {
             /> */}
             <div className="text-neutral-500 text-center mt-4 font-light">
                 <div className="flex flex-row items-center gap-2 justify-center">
-                    <div>Já tem uma conta?</div>
+                    <div>Primeira vez usando o airbnb?</div>
                     <div
-                        onClick={loginModal.onClose}
+                        onClick={toggle}
                         className="text-neutral-800 cursor-pointer hover:underline"
                     >
-                        Log in
+                        Crie uma conta
                     </div>
                 </div>
             </div>
