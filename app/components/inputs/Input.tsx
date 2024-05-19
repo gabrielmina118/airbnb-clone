@@ -45,7 +45,7 @@ const Input: React.FC<InputProps> = ({
                 disabled={disabled}
                 {...register(id, { required })}
                 placeholder=" "
-                type={showPassword && type === "password" ? "password" : "text"}
+                type={type}
                 className={`
                     peer
                     w-full
