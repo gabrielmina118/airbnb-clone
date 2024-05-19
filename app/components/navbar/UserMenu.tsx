@@ -40,7 +40,7 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
                     onClick={onRent}
                     className="hidden md:block text-sm font-semibold py-2 px-4 rounded-full hover:bg-neutral-300 transition cursor-pointer"
                 >
-                    Cadastre seu airbnb
+                    Anuncie seu espaço airbnb
                 </div>
                 <div
                     onClick={toggleOpen}

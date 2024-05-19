@@ -9,6 +9,12 @@ import Heading from "../Heading";
 import CategoryInput from "../inputs/CategoryInput";
 
 import { categories } from "@/app/utils/categories";
+import CountrySelect from "../inputs/CountrySelect";
+import Counter from "../inputs/Counter";
+
+import { FaBath } from "react-icons/fa";
+import { MdOutlineFamilyRestroom, MdBedroomParent } from "react-icons/md";
+
 
 enum STEPS {
     CATEGORY = 0,
@@ -46,6 +52,10 @@ const RentModal = () => {
     });
 
     const category = watch("category");
+    const location = watch("location");
+    const guestCoutn = watch("guestCoutn");
+    const roomCount = watch("roomCount");
+    const bathroomCount = watch("bathroomCount");
 
     const setCustomValue = (id: string, value: any) => {
         setValue(id, value, {
@@ -80,7 +90,7 @@ const RentModal = () => {
     let bodyContent = (
         <div className="flex flex-col gap-8">
             <Heading
-                title="Qual destes melhor descreve seu lugar?"
+                title="Qual das seguintes opções descreve melhor seu espaço?"
                 subtitle="Escolha uma categoria"
             />
             <div
@@ -111,15 +121,72 @@ const RentModal = () => {
         </div>
     );
 
+    if (step === STEPS.LOCATION) {
+        bodyContent = (
+            <div className="flex flex-col gap-8">
+                <Heading
+                    title="Onde fica a localização?"
+                    subtitle="Nos ajude a encontrar!"
+                />
+                <CountrySelect
+                    value={location}
+                    onChangeCountry={(value) =>
+                        setCustomValue("location", value)
+                    }
+                />
+            </div>
+        );
+    }
+
+    if (step == STEPS.INFO) {
+        bodyContent = (
+            <div className="flex flex-col gap-8">
+                <Heading
+                    title="Vamos começar pelo básico."
+                    subtitle="Compartilhe algumas informações sobre a casa?"
+                />
+                <Counter
+                    title="Hóspedes"
+                    subititle="Quantos hóspedes você pode receber confortavelmente na sua acomodação?"
+                    value={guestCoutn}
+                    onChangeCounter={(value) =>
+                        setCustomValue("guestCoutn", value)
+                    }
+                    icon={MdOutlineFamilyRestroom}
+                />
+                <hr />
+                <Counter
+                    title="Quartos"
+                    subititle="Quantos quartos possue sua acomodação?"
+                    value={roomCount}
+                    onChangeCounter={(value) =>
+                        setCustomValue("roomCount", value)
+                    }
+                    icon={MdBedroomParent}
+                />
+                <hr />
+                <Counter
+                    title="Banheiros"
+                    subititle="Quantos banheiros possue sua acomodação?"
+                    value={bathroomCount}
+                    onChangeCounter={(value) =>
+                        setCustomValue("bathroomCount", value)
+                    }
+                    icon={FaBath}
+                />
+            </div>
+        );
+    }
+
     return (
         <Modal
             isOpen={rentModal.isOpen}
             onClose={rentModal.onClose}
-            onSubmit={rentModal.onClose}
+            onSubmit={onForward}
             actionLabel={actionLabel}
             secondaryActionLabel={secondaryActionLabel}
             secondaryAction={step === STEPS.CATEGORY ? undefined : onBack}
-            title="Aibnb cadastro !"
+            title="É muito fácil anunciar no Airbnb"
             body={bodyContent}
         />
     );
