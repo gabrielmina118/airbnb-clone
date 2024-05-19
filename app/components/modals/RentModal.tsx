@@ -14,7 +14,8 @@ import Counter from "../inputs/Counter";
 
 import { FaBath } from "react-icons/fa";
 import { MdOutlineFamilyRestroom, MdBedroomParent } from "react-icons/md";
-
+import ImageUpload from "../inputs/ImageUpload";
+import Input from "../inputs/Input";
 
 enum STEPS {
     CATEGORY = 0,
@@ -56,6 +57,7 @@ const RentModal = () => {
     const guestCoutn = watch("guestCoutn");
     const roomCount = watch("roomCount");
     const bathroomCount = watch("bathroomCount");
+    const imageSrc = watch("imageSrc");
 
     const setCustomValue = (id: string, value: any) => {
         setValue(id, value, {
@@ -174,6 +176,35 @@ const RentModal = () => {
                     }
                     icon={FaBath}
                 />
+            </div>
+        );
+    }
+
+    if (step === STEPS.IMAGES) {
+        bodyContent = (
+            <div className="flex flex-col gap-8">
+                <Heading
+                    title="Adicione uma foto do seu ambiente"
+                    subtitle="Mostre aos hóspedes como seu lugar se parece!"
+                />
+                <ImageUpload
+                    value={imageSrc}
+                    onChangeUpload={(value) =>
+                        setCustomValue("imageSrc", value)
+                    }
+                />
+            </div>
+        );
+    }
+
+    if (step === STEPS.DESCRIPTION) {
+        bodyContent = (
+            <div className="flex flex-col gap-8">
+                <Heading
+                    title="Descreva o seu ambiente"
+                    subtitle="curtos e diretos funcionam melhor!"
+                />
+                <Input/>
             </div>
         );
     }
