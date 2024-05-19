@@ -19,6 +19,12 @@ import Input from "../inputs/Input";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import CategoryStep from "../steps/CategoryStep";
+import LocationStep from "../steps/LocationStep";
+import InfoStep from "../steps/InfoStep";
+import ImagesStep from "../steps/ImagesStep";
+import DescriptionStep from "../steps/DescriptionStep";
+import PriceStep from "../steps/PriceStep";
 
 enum STEPS {
     CATEGORY = 0,
@@ -117,162 +123,65 @@ const RentModal = () => {
         return "Voltar";
     }, [step]);
 
-    let bodyContent = (
-        <div className="flex flex-col gap-8">
-            <Heading
-                title="Qual das seguintes opções descreve melhor seu espaço?"
-                subtitle="Escolha uma categoria"
-            />
-            <div
-                className="
-                    grid 
-                    grid-cols-1 
-                    md:grid-cols-2 
-                    gap-2
-                    max-h-[50vh]
-                    overflow-y-auto
-                    "
-            >
-                {categories.map((item) => {
-                    return (
-                        <div key={item.label} className="col-span-1">
-                            <CategoryInput
-                                onClick={(category) =>
-                                    setCustomValue("category", category)
-                                }
-                                selected={category === item.label}
-                                label={item.label}
-                                icon={item.icon}
-                            />
-                        </div>
-                    );
-                })}
-            </div>
-        </div>
-    );
+    const onChangeSteps = () =>{
+        let bodyContent;
 
-    if (step === STEPS.LOCATION) {
-        bodyContent = (
-            <div className="flex flex-col gap-8">
-                <Heading
-                    title="Onde fica a localização?"
-                    subtitle="Nos ajude a encontrar!"
-                />
-                <CountrySelect
-                    value={location}
-                    onChangeCountry={(value) =>
-                        setCustomValue("location", value)
-                    }
-                />
-            </div>
-        );
-    }
+        switch (step) {
+            case STEPS.LOCATION:
+                bodyContent = (
+                    <LocationStep
+                        location={location}
+                        setCustomValue={setCustomValue}
+                    />
+                );
+                break;
+            case STEPS.INFO:
+                bodyContent = (
+                    <InfoStep
+                        bathroomCount={bathroomCount}
+                        guestCoutn={guestCoutn} 
+                        roomCount={roomCount}
+                        setCustomValue={setCustomValue}
+                    />
+                );
+                break;
+            case STEPS.IMAGES:
+                bodyContent = (
+                    <ImagesStep
+                        imageSrc={imageSrc}
+                        setCustomValue={setCustomValue}
+                    />
+                );
+                break;
+            case STEPS.DESCRIPTION:
+                bodyContent = (
+                    <DescriptionStep
+                        isLoading={isLoading}
+                        register={register}
+                        errors={errors}
+                    />
+                );
+                break;
+            case STEPS.PRICE:
+                bodyContent = (
+                    <PriceStep
+                        isLoading={isLoading}
+                        register={register}
+                        errors={errors}
+                    />
+                );
+                break;
+            default:
+                bodyContent = (
+                    <CategoryStep
+                        category={category}
+                        setCustomValue={setCustomValue}
+                    />
+                );
+                break;
+        }
 
-    if (step == STEPS.INFO) {
-        bodyContent = (
-            <div className="flex flex-col gap-8">
-                <Heading
-                    title="Vamos começar pelo básico."
-                    subtitle="Compartilhe algumas informações sobre a casa?"
-                />
-                <Counter
-                    title="Hóspedes"
-                    subititle="Quantos hóspedes você pode receber confortavelmente na sua acomodação?"
-                    value={guestCoutn}
-                    onChangeCounter={(value) =>
-                        setCustomValue("guestCoutn", value)
-                    }
-                    icon={MdOutlineFamilyRestroom}
-                />
-                <hr />
-                <Counter
-                    title="Quartos"
-                    subititle="Quantos quartos possue sua acomodação?"
-                    value={roomCount}
-                    onChangeCounter={(value) =>
-                        setCustomValue("roomCount", value)
-                    }
-                    icon={MdBedroomParent}
-                />
-                <hr />
-                <Counter
-                    title="Banheiros"
-                    subititle="Quantos banheiros possue sua acomodação?"
-                    value={bathroomCount}
-                    onChangeCounter={(value) =>
-                        setCustomValue("bathroomCount", value)
-                    }
-                    icon={FaBath}
-                />
-            </div>
-        );
-    }
-
-    if (step === STEPS.IMAGES) {
-        bodyContent = (
-            <div className="flex flex-col gap-8">
-                <Heading
-                    title="Adicione uma foto do seu ambiente"
-                    subtitle="Mostre aos hóspedes como seu lugar se parece!"
-                />
-                <ImageUpload
-                    value={imageSrc}
-                    onChangeUpload={(value) =>
-                        setCustomValue("imageSrc", value)
-                    }
-                />
-            </div>
-        );
-    }
-
-    if (step === STEPS.DESCRIPTION) {
-        bodyContent = (
-            <div className="flex flex-col gap-8">
-                <Heading
-                    title="Descreva o seu ambiente"
-                    subtitle="descrições curtas e diretas funcionam melhor!"
-                />
-                <Input
-                    id="title"
-                    label="titulo"
-                    disabled={isLoading}
-                    register={register}
-                    erros={errors}
-                    required
-                />
-                <hr />
-                <Input
-                    id="descricao"
-                    label="Descrição"
-                    disabled={isLoading}
-                    register={register}
-                    erros={errors}
-                    required
-                />
-            </div>
-        );
-    }
-
-    if (step === STEPS.PRICE) {
-        bodyContent = (
-            <div className="flex flex-col gap-8">
-                <Heading
-                    title="Insira o valor"
-                    subtitle="Quanto você cobra por noite?"
-                />
-                <Input
-                    id="price"
-                    label="Preço"
-                    formatPrice={true}
-                    type="number"
-                    disabled={isLoading}
-                    register={register}
-                    erros={errors}
-                    required
-                />
-                <hr />
-            </div>
-        );
+        return bodyContent;
     }
 
     return (
@@ -284,7 +193,7 @@ const RentModal = () => {
             secondaryActionLabel={secondaryActionLabel}
             secondaryAction={step === STEPS.CATEGORY ? undefined : onBack}
             title="É muito fácil anunciar no Airbnb"
-            body={bodyContent}
+            body={onChangeSteps()}
         />
     );
 };
