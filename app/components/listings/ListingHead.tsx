@@ -9,10 +9,10 @@ import Image from "next/image";
 import HeartButton from "../HeartButton";
 
 interface ListingHeadProps {
-    id: string;
-    title: string;
-    imageSrc: string;
-    locationValue: string;
+    id: string | undefined;
+    title: string | undefined;
+    imageSrc: string | undefined;
+    locationValue: string | undefined;
     currentUser?: User | null;
 }
 
@@ -24,7 +24,7 @@ const ListingHead: React.FC<ListingHeadProps> = ({
     currentUser,
 }) => {
     const { getByValue } = useCountries();
-    const location = getByValue(locationValue);
+    const location = getByValue(locationValue!);
 
     const flag = useMemo(() => {
         return allFlags.find(
@@ -36,7 +36,7 @@ const ListingHead: React.FC<ListingHeadProps> = ({
         <>
             <div className="flex flex-row items-center">
                 <Heading
-                    title={title}
+                    title={title!}
                     subtitle={`${
                         location?.label
                     } , ${location?.cod.toUpperCase()}`}
@@ -54,12 +54,12 @@ const ListingHead: React.FC<ListingHeadProps> = ({
             >
                 <Image
                     alt="image"
-                    src={imageSrc}
+                    src={imageSrc!}
                     fill
                     className="object-cover w-full"
                 />
                 <div className="absolute top-5 right-5">
-                    <HeartButton listingId={id} currentUser={currentUser} />
+                    <HeartButton listingId={id!} currentUser={currentUser} />
                 </div>
             </div>
         </>

@@ -7,7 +7,7 @@ import { BiSolidCastle } from "react-icons/bi";
 import { LuGrape } from "react-icons/lu";
 import { IoDiamond } from "react-icons/io5";
 
-interface ICategories {
+export interface ICategories {
     label: string;
     title:string;
     icon: IconType;
