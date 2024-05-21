@@ -3,6 +3,7 @@ import { useRouter } from "next/navigation";
 import React from "react";
 import Heading from "./Heading";
 import Button from "./Button";
+import { TbError404 } from "react-icons/tb";
 
 interface EmptyStateProps {
     title?: string;
@@ -27,6 +28,7 @@ const EmptyState: React.FC<EmptyStateProps> = ({
             items-center
         "
         >
+            <TbError404 size={60} className="text-rose-600"/>
             <Heading center title={title} subtitle={subtitle} />
             <div className="w-48 mt-4">
                 {showReset && (
