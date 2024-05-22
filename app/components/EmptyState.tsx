@@ -4,19 +4,23 @@ import React from "react";
 import Heading from "./Heading";
 import Button from "./Button";
 import { TbError404 } from "react-icons/tb";
+import useLoginModal from "../hooks/useLoginModal";
 
 interface EmptyStateProps {
     title?: string;
     subtitle?: string;
     showReset?: boolean;
+    showLogin?: boolean;
 }
 
 const EmptyState: React.FC<EmptyStateProps> = ({
     title = "Não há nenhuma acomodação cadastrada para essa categoria",
     subtitle = "Altere ou remova seu filtro",
     showReset,
+    showLogin,
 }) => {
     const router = useRouter();
+    const loginModal = useLoginModal();
     return (
         <div
             className="
@@ -28,7 +32,7 @@ const EmptyState: React.FC<EmptyStateProps> = ({
             items-center
         "
         >
-            <TbError404 size={60} className="text-rose-600"/>
+            <TbError404 size={60} className="text-rose-600" />
             <Heading center title={title} subtitle={subtitle} />
             <div className="w-48 mt-4">
                 {showReset && (
@@ -36,6 +40,15 @@ const EmptyState: React.FC<EmptyStateProps> = ({
                         outline
                         label="Remova todos os filtros"
                         onClick={() => router.push("/")}
+                    />
+                )}
+            </div>
+            <div className="w-48 mt-4">
+                {showLogin && (
+                    <Button
+                        outline
+                        label="Realize o login"
+                        onClick={() => loginModal.onOpen()}
                     />
                 )}
             </div>
