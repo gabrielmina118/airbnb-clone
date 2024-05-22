@@ -8,6 +8,7 @@ import { useCallback, useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
 import ListingCard from "../components/listings/ListingCard";
+import EmptyReservation from "../components/EmptyReservation";
 
 interface TripsClientProps {
     reservations: Reservation[];
@@ -40,6 +41,9 @@ const TripsClient: React.FC<TripsClientProps> = ({
         [router]
     );
 
+    if (reservations.length === 0) {
+        return <EmptyReservation />;
+    }
     return (
         <Container>
             <Heading
