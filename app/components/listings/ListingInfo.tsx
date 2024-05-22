@@ -5,6 +5,7 @@ import { User } from "@prisma/client";
 import { IconType } from "react-icons";
 import Avartar from "../Avatar";
 import ListingCategory from "./ListingCategory";
+import ListingServices from "./ListingServices";
 
 interface ListingInfoProps {
     user: User | null;
@@ -88,6 +89,8 @@ const ListingInfo: React.FC<ListingInfoProps> = ({
             <div className="text-lg font-light text-neutral-500">
                 {description}
             </div>
+            <hr />
+            <ListingServices />
         </div>
     );
 };
