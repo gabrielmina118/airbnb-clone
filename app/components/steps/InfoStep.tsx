@@ -20,7 +20,7 @@ const InfoStep: React.FC<InfoStepProps> = ({
         <div className="flex flex-col gap-8">
             <Heading
                 title="Vamos começar pelo básico."
-                subtitle="Compartilhe algumas informações sobre a casa?"
+                subtitle="Compartilhe algumas informações sobre o espaço?"
             />
             <Counter
                 title="Hóspedes"

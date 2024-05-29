@@ -5,15 +5,6 @@ import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import useRentModal from "@/app/hooks/useRentModal";
 import Modal from "./Modal";
 
-import Heading from "../Heading";
-import CategoryInput from "../inputs/CategoryInput";
-
-import { categories } from "@/app/utils/categories";
-import CountrySelect from "../inputs/CountrySelect";
-import Counter from "../inputs/Counter";
-
-import { FaBath } from "react-icons/fa";
-import { MdOutlineFamilyRestroom, MdBedroomParent } from "react-icons/md";
 import ImageUpload from "../inputs/ImageUpload";
 import Input from "../inputs/Input";
 import axios from "axios";
