@@ -4,9 +4,9 @@ const prisma = new PrismaClient();
 
 export interface IListingParams {
     userId?: string;
-    guestCoutn?: any;
-    roomCount?: any;
-    bathroomCount?: any;
+    guestCoutn?: number;
+    roomCount?: number;
+    bathroomCount?: number;
     startDate?: string;
     endDate?: string;
     category?: string;
@@ -33,7 +33,7 @@ export default async function getListings(params: IListingParams) {
         }
 
         if (category) {
-            query.category = category;
+            query.category = category.toLowerCase();
         }
 
         if (roomCount) {

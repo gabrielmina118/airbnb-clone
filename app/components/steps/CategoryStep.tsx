@@ -30,13 +30,13 @@ const CategoryStep: React.FC<CategoryStepProps> = ({
             >
                 {categories.map((item) => {
                     return (
-                        <div key={item.label} className="col-span-1">
+                        <div key={item.title} className="col-span-1">
                             <CategoryInput
                                 onClick={(category) =>
                                     setCustomValue("category", category)
                                 }
-                                selected={category === item.label}
-                                label={item.label}
+                                selected={category === item.title}
+                                label={item.title}
                                 icon={item.icon}
                             />
                         </div>
