@@ -43,7 +43,6 @@ const RegisterModal = () => {
                 registerModal.onClose();
             })
             .catch((error) => {
-                console.log(error);
                 toast.error("Algo deu errado");
             })
             .finally(() => {

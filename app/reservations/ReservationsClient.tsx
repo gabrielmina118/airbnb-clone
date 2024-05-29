@@ -43,7 +43,6 @@ const ReservationsClient: React.FC<TripsClientProps> = ({
         [router]
     );
 
-    console.log("reservations", reservations);
 
     return (
         <Container>
