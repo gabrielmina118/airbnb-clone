@@ -5,8 +5,6 @@ import Credentials from "next-auth/providers/credentials";
 import GithubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
 import FacebookProvider from "next-auth/providers/facebook";
-
-import { compare } from "bcrypt";
 import { PrismaClient } from "@prisma/client";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 
@@ -48,6 +46,8 @@ export const authOptions: AuthOptions = {
                 if (!user || !user.hashPassword) {
                     throw new Error("invalid credentials");
                 }
+
+                const { compare } = await import("bcrypt");
 
                 const isCorrectPassword = await compare(
                     credentials?.password,

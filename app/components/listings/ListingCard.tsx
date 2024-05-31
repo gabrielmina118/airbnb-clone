@@ -12,7 +12,7 @@ import { format } from "date-fns";
 import Button from "../Button";
 
 interface ListingCardProps {
-    data: Listing;
+    data: any;
     reservation?: Reservation;
     onAction?: (id: string) => void;
     disabled?: boolean;

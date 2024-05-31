@@ -8,7 +8,7 @@ import ListingCategory from "./ListingCategory";
 import ListingServices from "./ListingServices";
 
 interface ListingInfoProps {
-    user: User | null;
+    user: any;
     category:
         | {
               icon: IconType;

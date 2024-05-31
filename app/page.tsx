@@ -1,25 +1,42 @@
+'use client'
+import { Suspense, useEffect, useState } from "react";
+import { Listing } from "@prisma/client";
 import getCurrentUser from "./actions/getCurrentUser";
 import getListings, { IListingParams } from "./actions/getListings";
 import Container from "./components/Container";
 import EmptyState from "./components/EmptyState";
 import ListingCard from "./components/listings/ListingCard";
-
 interface HomeProps {
     searchParams: IListingParams;
 }
 
-const Home = async ({ searchParams }: HomeProps) => {
-    const listings = await getListings(searchParams);
-    const currentUser = await getCurrentUser();
+const Home = ({ searchParams }: HomeProps) => {
+    let [listings, setListings] = useState<Listing[]>([]);
+    let [currentUser, setCurrentUser]= useState();
 
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const listingsData = await getListings(searchParams);
+                const currentUserData = await getCurrentUser();
+                setListings(listingsData as any);
+                setCurrentUser(currentUserData as any);
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            }
+        };
 
-    if (listings.length === 0) {
+        fetchData();
+    }, [searchParams]);
+
+    if (listings?.length === 0) {
         return <EmptyState showReset />;
     }
     return (
-        <Container>
-            <div
-                className="
+        <Suspense>
+            <Container>
+                <div
+                    className="
                     pt-24
                     grid
                     grid-cols-1
@@ -30,18 +47,19 @@ const Home = async ({ searchParams }: HomeProps) => {
                     2xl:grid-cols-6
                     gap-8
                     "
-            >
-                {listings.map((listing: any) => {
-                    return (
-                        <ListingCard
-                            key={listing.id}
-                            currentUser={currentUser}
-                            data={listing}
-                        />
-                    );
-                })}
-            </div>
-        </Container>
+                >
+                    {listings.map((listing: any) => {
+                        return (
+                            <ListingCard
+                                key={listing.id}
+                                currentUser={currentUser}
+                                data={listing}
+                            />
+                        );
+                    })}
+                </div>
+            </Container>
+        </Suspense>
     );
 };
 

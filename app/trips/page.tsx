@@ -2,8 +2,8 @@ import EmptyState from "../components/EmptyState";
 import getCurrentUser from "../actions/getCurrentUser";
 import getReservations from "../actions/getReservations";
 import TripsClient from "./TripsClient";
-
-const TripsPage = async () => {
+import { Suspense } from "react";
+const Trips = async () => {
     const currentUser = await getCurrentUser();
 
     if (!currentUser) {
@@ -26,7 +26,12 @@ const TripsPage = async () => {
     }
 
     return (
-        <TripsClient reservations={reservations} currentUser={currentUser} />
+        <Suspense>
+            <TripsClient
+                reservations={reservations}
+                currentUser={currentUser}
+            />
+        </Suspense>
     );
 };
-export default TripsPage;
+export default Trips;

@@ -6,7 +6,7 @@ import Heading from "../components/Heading";
 import ListingCard from "../components/listings/ListingCard";
 
 interface FavoritesClientProps {
-    listings: Listing[] | null;
+    listings: any;
     currentUser?: User | null;
 }
 
@@ -33,7 +33,7 @@ const FavoritesClient: React.FC<FavoritesClientProps> = ({
             gap-8
             "
             >
-                {listings?.map((list) => {
+                {listings?.map((list:any) => {
                     return (
                         <ListingCard
                             key={list.id}

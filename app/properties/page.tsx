@@ -2,7 +2,7 @@ import EmptyState from "../components/EmptyState";
 import getCurrentUser from "../actions/getCurrentUser";
 import getListings from "../actions/getListings";
 import PropertiesClient from "./PropertiesClient";
-
+import { Suspense } from "react";
 const PropertiesPage = async () => {
     const currentUser = await getCurrentUser();
 
@@ -25,6 +25,10 @@ const PropertiesPage = async () => {
         />;
     }
 
-    return <PropertiesClient listings={listings} currentUser={currentUser} />;
+    return (
+        <Suspense>
+            <PropertiesClient listings={listings} currentUser={currentUser} />
+        </Suspense>
+    );
 };
 export default PropertiesPage;
