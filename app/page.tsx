@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import { Suspense, useEffect, useState } from "react";
 import { Listing } from "@prisma/client";
 import getCurrentUser from "./actions/getCurrentUser";
@@ -9,11 +10,9 @@ interface HomeProps {
     searchParams: IListingParams;
 }
 
-const Home = async({ searchParams }: HomeProps) => {
+const Home = async ({ searchParams }: HomeProps) => {
     const listings = await getListings(searchParams);
     const currentUser = await getCurrentUser();
-
-   
 
     if (listings?.length === 0) {
         return <EmptyState showReset />;
