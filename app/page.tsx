@@ -8,19 +8,20 @@ import ListingCard from "./components/listings/ListingCard";
 import axios from "axios";
 
 const Home = () => {
-    const [user, setUser] = useState();
+    const [user, setUser] = useState<any | undefined>();
     const [listing, setListing] = useState<any>();
 
     useEffect(() => {
 
         const fetchData = async () => {
             try {
-                const currentUser = await axios.get("/api/user");
+                // const currentUser = await axios.get("/api/user");
                 const listings = await axios.get("/api/listings");
+                // console.log("currentUser", currentUser);
                 console.log("listings", listings);
 
                 setListing(listings.data);
-                setUser(currentUser.data);
+                // setUser(currentUser.data);
             } catch (error) {}
         };
         fetchData();
@@ -29,7 +30,7 @@ const Home = () => {
     if (!listing) {
         return <EmptyState showReset />;
     }
-    console.log("user", user);
+    
 
     return (
         <Suspense>
@@ -51,7 +52,6 @@ const Home = () => {
                         return (
                             <ListingCard
                                 key={listing.id}
-                                currentUser={user}
                                 data={listing}
                             />
                         );
