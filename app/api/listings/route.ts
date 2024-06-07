@@ -41,3 +41,14 @@ export async function POST(request: Request) {
 
     return NextResponse.json(listing);
 }
+
+
+export async function GET(request: Request) {
+    const listings = await prisma.listing.findMany({
+        orderBy: {
+            createdAt: "desc",
+        },
+    });
+
+    return NextResponse.json(listings);
+}

@@ -1,24 +1,36 @@
+'use client'
 export const dynamic = "force-dynamic";
 import { Suspense, useEffect, useState } from "react";
-import { Listing } from "@prisma/client";
-import getCurrentUser from "./actions/getCurrentUser";
-import getListings, { IListingParams } from "./actions/getListings";
+import { Listing, User } from "@prisma/client";
 import Container from "./components/Container";
 import EmptyState from "./components/EmptyState";
 import ListingCard from "./components/listings/ListingCard";
-interface HomeProps {
-    searchParams: IListingParams;
-}
+import axios from "axios";
 
-const Home = async ({ searchParams }: HomeProps) => {
-    const listings = await getListings(searchParams);
-    const currentUser = await getCurrentUser();
+const Home = () => {
+    const [user, setUser] = useState();
+    const [listing, setListing] = useState<any>();
 
-    if (listings?.length === 0) {
+    useEffect(() => {
+
+        const fetchData = async () => {
+            try {
+                const currentUser = await axios.get("/api/user");
+                const listings = await axios.get("/api/listings");
+                console.log("listings", listings);
+
+                setListing(listings.data);
+                setUser(currentUser.data);
+            } catch (error) {}
+        };
+        fetchData();
+    }, []);
+
+    if (!listing) {
         return <EmptyState showReset />;
     }
+    console.log("user", user);
 
-    console.log("listings", listings);
     return (
         <Suspense>
             <Container>
@@ -35,11 +47,11 @@ const Home = async ({ searchParams }: HomeProps) => {
                     gap-8
                     "
                 >
-                    {listings.map((listing: any) => {
+                    {listing.map((listing: any) => {
                         return (
                             <ListingCard
                                 key={listing.id}
-                                currentUser={currentUser}
+                                currentUser={user}
                                 data={listing}
                             />
                         );
