@@ -1,4 +1,4 @@
-'use client'
+"use client";
 export const dynamic = "force-dynamic";
 import { Suspense, useEffect, useState } from "react";
 import { Listing, User } from "@prisma/client";
@@ -12,16 +12,15 @@ const Home = () => {
     const [listing, setListing] = useState<any>();
 
     useEffect(() => {
-
         const fetchData = async () => {
             try {
-                // const currentUser = await axios.get("/api/user");
+                const currentUser = await axios.get("/api/user");
                 const listings = await axios.get("/api/listings");
-                // console.log("currentUser", currentUser);
+                console.log("currentUser", currentUser);
                 console.log("listings", listings);
 
                 setListing(listings.data);
-                // setUser(currentUser.data);
+                setUser(currentUser.data);
             } catch (error) {}
         };
         fetchData();
@@ -30,7 +29,6 @@ const Home = () => {
     if (!listing) {
         return <EmptyState showReset />;
     }
-    
 
     return (
         <Suspense>
@@ -51,6 +49,7 @@ const Home = () => {
                     {listing.map((listing: any) => {
                         return (
                             <ListingCard
+                                currentUser={user}
                                 key={listing.id}
                                 data={listing}
                             />
