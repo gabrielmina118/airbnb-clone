@@ -44,11 +44,13 @@ export async function POST(request: Request) {
 
 
 export async function GET(request: Request) {
+    console.log("Renderizando espaços")
     const listings = await prisma.listing.findMany({
         orderBy: {
             createdAt: "desc",
         },
     });
+    console.log("Renderizando espaços" , listings)
 
     return NextResponse.json(listings);
 }

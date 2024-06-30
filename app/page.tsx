@@ -14,6 +14,7 @@ const Home = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
+                console.log("Buscando usuario e espaços no geral")
                 const currentUser = await axios.get("/api/user");
                 const listings = await axios.get("/api/listings");
                 console.log("currentUser", currentUser);
