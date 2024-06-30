@@ -1,7 +1,5 @@
 <img  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQMp1kYn6umTdkijGwau4aM1bBC7776pcJOnQ&s" width="120" />
 
-- Link do projeto -> https://airbnb-projeto-kslpblp9u-gabrielmina118s-projects.vercel.app/
-
 - Um clone da aplicação airbnb versão web utilizando <code>React</code> , <code>NextJS</code> , <code>Tailwind CSS</code> , <code>Prisma</code> , <code>MongoDB</code> , <code>NextAuth</code> e <code>Vercel</code>
 
 ## 🚀 Começando
